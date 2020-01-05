@@ -21,43 +21,47 @@ class Duolingo:
         else:
             exit(-1)
 
-        input('next?')
         input('goto duolingo')
         self.driver.get("https://duolingo.com")
-        input('setup window size')
+        time.sleep(2)
         self.driver.set_window_size(1280, 773)
 
     def get_driver(self):
         return self.driver
 
     def click_alread_have_an_account(self):
-        input("next? - push 'have-account'")
+        #input("next? - push 'have-account'")
         element = self.driver.find_element(By.CSS_SELECTOR, ".\\_2hNaj")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
         # Click "Already have an account"
         self.driver.find_element(By.CSS_SELECTOR, "*[data-test=\"have-account\"]").click()
+        time.sleep(3)
 
     def provide_credentials(self):
         # Provide the credentials
-        input("next? - credentials")
+        #input("next? - credentials")
         l = credentials.get_login()
         print("l = " + str(l))
         self.driver.find_element(By.CSS_SELECTOR, "*[data-test=\"email-input\"]").send_keys(l)
 
-        input("next? - credentials")
+        #input("next? - credentials")
         p = credentials.get_password()
         print("p = " + str(p))
         self.driver.find_element(By.CSS_SELECTOR, "*[data-test=\"password-input\"]").send_keys(p)
-        input("next? - credentials")
+        #input("next? - credentials")
+        time.sleep(1)
 
     def click_login(self):
         # Click "Login"
-        input("next? - login")
+        #input("next? - login")
         self.driver.find_element(By.CSS_SELECTOR, "*[data-test=\"register-button\"]").click()
         element = self.driver.find_element(By.CSS_SELECTOR, ".\\_3ryeM")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
+        time.sleep(6)
+        input("Have you logged in successfully?")
+
 
     def __from_11_to_2(self):
         element = self.driver.find_element(By.CSS_SELECTOR, ".v836l:nth-child(11)")
@@ -82,77 +86,27 @@ class Duolingo:
 
     def switch_to_stories(self):
         # Switch to the "Stories"
-        input("next? - to stories")
+        #input("next? - to stories")
         element = self.driver.find_element(By.CSS_SELECTOR, ".v836l:nth-child(3) .\\_1KHTi")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).release().perform()
         self.driver.find_element(By.CSS_SELECTOR, ".v836l:nth-child(3) .\\_1KHTi").click()
+        time.sleep(3)
 
     def start_the_story(self):        
         # Scroll to y=1 line
-        input("next? - scroll to the beginning of the page")
+        # input("next? - scroll to the beginning of the page")
         self.driver.execute_script("window.scrollTo(0,1)")
+        time.sleep(1)
 
         # Start the first story
-        input("next? - start the first story")
+        # input("next? - start the first story")
         self.driver.find_element(By.CSS_SELECTOR, ".set:nth-child(2) > .story:nth-child(3) .story-cover-illustration-image").click()
 
     def click_continue(self,t=0.5):
         time.sleep(t)
         print('continue')
         self.driver.find_element_by_class_name("continue").click()        
-
-    def pick_my_darling(self):
-        i=1
-        while(1):
-            e = self.driver.find_element_by_class_name("challenge-answers li:nth-of-type("+str(i)+")")
-            if e.text == 'My darling.':
-                e.click()
-                break
-            i = i+1
-            if i > 3:
-                print('ERROR: i>3 in pick_my_darling')
-            input("next?")
-
-    def pick_examen_d_anglais(self):
-        i=1
-        while(1):
-            # element = self.driver.find_element(By.CSS_SELECTOR, ".challenge-answer:nth-child(1) > .selectable-token")
-            # actions = ActionChains(self.driver)
-            # actions.move_to_element(element).release().perform()
-            e = self.driver.find_element(By.CSS_SELECTOR, ".challenge-answer:nth-child("+str(i)+") > .selectable-token").click()
-            if e.text == 'examen d\'anglais':
-                e.click()
-                break
-            i=i+1
-            if i>3:
-                print('ERROR: i>3 in pick_examen_d....')
-            input("next?")
-
-    def pick_fatigue(self):
-        i=1
-        while(1):
-            e = self.driver.find_element(By.CSS_SELECTOR, ".line-text-content:nth-child("+str(i)+") > .tappable-phrase").click()
-            if e.text == 'examen d\'anglais':
-                e.click()
-                break
-            i=i+1
-            if i>3:
-                print('ERROR: i>3 in pick_examen_d....')
-            input("next?")
-            
-
-    def pick_she_put_sugar_(self):
-        i=1
-        while(1):
-            e = self.driver.find_element_by_class_name("challenge-answers li:nth-of-type("+str(i)+")")
-            if e.text == 'What?':
-                e.click()
-                break
-            i = i+1
-            if i > 3:
-                print('ERROR: i>3 in pick_what?')
-            input("next?")
 
     def pick_li_answer(self, answer):
         i=1

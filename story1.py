@@ -1,19 +1,30 @@
 dict = {
-    'women'   : 'femme',
-    'tired'   : 'fatiguée', 
     'a lot'   : 'beaucoup',
+    'are'     : 'es',
     'table'   : 'table', 
     'puts'    : 'met',
     'where'   : 'Où',
-    'are'     : 'es',
     'it\'s'   : 'C\'est',
     'in'      : 'dans',
     'drinks'  : 'boit',
     'of'      : 'de',
+    'on'      : 'sur',
     'my'      : 'mon', 
     'some sugar' : 'du sucre',
     'she'     : 'Elle',
-    'darling' : 'chéri'
+    'his'     : 'sa',
+    'darling' : 'chéri',
+    'I'       : 'Je',
+    'I have'  : 'J\'ai',
+    'yuck'    : 'Beurk',
+    'good morning' : 'Bonjour !',
+    'sorry'   : 'Pardon',
+    'work'    : 'travaille',
+    'cup'     : 'tasse',
+    'women'   : 'femme',
+    'tired'   : 'fatiguée', 
+    'yes'     : 'Oui'
+
 
 }
 
