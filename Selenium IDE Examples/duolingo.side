@@ -1,0 +1,223 @@
+{
+  "id": "e3cb5c85-efaf-4633-bf6f-d86b83add966",
+  "version": "2.0",
+  "name": "duolingo",
+  "url": "https://www.duolingo.com/",
+  "tests": [{
+    "id": "78790558-a9af-41c6-a995-d6802d099e7b",
+    "name": "test",
+    "commands": [{
+      "id": "4e5c07f0-39da-42e3-bb68-572f2f2b6236",
+      "comment": "",
+      "command": "open",
+      "target": "https://www.duolingo.com/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a6f36ae9-4c46-4fd8-821a-5e71fe82772d",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1280x773",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5052b756-0dc7-4065-a6c8-a7d4bb30bdbd",
+      "comment": "",
+      "command": "click",
+      "target": "css=*[data-test=\"have-account\"]",
+      "targets": [
+        ["css=*[data-test=\"have-account\"]", "css:data-attr"],
+        ["linkText=I ALREADY HAVE AN ACCOUNT", "linkText"],
+        ["css=.\\_1z5f5", "css:finder"],
+        ["xpath=//a[contains(text(),'I ALREADY HAVE AN ACCOUNT')]", "xpath:link"],
+        ["xpath=//div[@id='root']/div/div/span/div/div/div[2]/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'javascript:;')]", "xpath:href"],
+        ["xpath=//div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'I ALREADY HAVE AN ACCOUNT')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9f2fcddb-dad6-4905-b4a2-8f3bdc69c150",
+      "comment": "",
+      "command": "type",
+      "target": "css=*[data-test=\"email-input\"]",
+      "targets": [
+        ["css=*[data-test=\"email-input\"]", "css:data-attr"],
+        ["css=.\\_1l5ZK:nth-child(1) .pbbEi", "css:finder"],
+        ["xpath=//input[@value='kowaraj4stuff@gmail.com']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "kowaraj4stuff@gmail.com"
+    }, {
+      "id": "eef0acac-e49d-42bf-b661-a4aa5b2f7549",
+      "comment": "",
+      "command": "type",
+      "target": "css=*[data-test=\"password-input\"]",
+      "targets": [
+        ["css=*[data-test=\"password-input\"]", "css:data-attr"],
+        ["css=.\\_1l5ZK:nth-child(2) .pbbEi", "css:finder"],
+        ["xpath=//input[@value='my_password']", "xpath:attributes"],
+        ["xpath=//label[2]/div/input", "xpath:position"]
+      ],
+      "value": "my_password!"
+    }, {
+      "id": "abc90a8b-7059-422f-ae55-f1f883af13f4",
+      "comment": "",
+      "command": "click",
+      "target": "css=*[data-test=\"register-button\"]",
+      "targets": [
+        ["css=*[data-test=\"register-button\"]", "css:data-attr"],
+        ["css=.RqOOF", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form/div/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fc0c15bc-8c90-4b11-8910-1f432295776a",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=*[data-test=\"get-started-top\"]",
+      "targets": [
+        ["css=*[data-test=\"get-started-top\"]", "css:data-attr"],
+        ["css=.\\_3ryeM > #signup-link", "css:finder"],
+        ["xpath=(//a[contains(text(),'Get started')])[2]", "xpath:link"],
+        ["xpath=(//a[@id='signup-link'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/span/div/div/div[2]/div/div/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '/register')])[2]", "xpath:href"],
+        ["xpath=//span/div/div/div[2]/div/div/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f12e7dd5-5464-4c0a-aaf5-639943fae5ae",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.\\_3FqQY",
+      "targets": [
+        ["css=.\\_3FqQY", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div[2]/div[2]", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cb745243-a089-4d08-ad3d-d99a490daa2f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.\\_2-Lx6 > .U_ned:nth-child(2)",
+      "targets": [
+        ["css=.\\_2-Lx6 > .U_ned:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div[2]/div[2]/div[2]/div[11]/span/div/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//span/div/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f8963774-235e-4d4b-8f46-fd11184c38fc",
+      "comment": "",
+      "command": "click",
+      "target": "css=.\\_2-Lx6 > .U_ned:nth-child(2)",
+      "targets": [
+        ["css=.\\_2-Lx6 > .U_ned:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div[2]/div[2]/div[2]/div[9]/span/div/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//span/div/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "416ed73c-9e30-4d2e-baff-52271a5a9a3d",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.v836l:nth-child(11)",
+      "targets": [
+        ["css=.v836l:nth-child(11)", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div[2]/div[2]/div[2]/div[11]", "xpath:idRelative"],
+        ["xpath=//div[11]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "de4ccb5b-536a-4865-8712-37d771be4100",
+      "comment": "",
+      "command": "click",
+      "target": "css=.\\_2-Lx6 > .U_ned:nth-child(2)",
+      "targets": [
+        ["css=.\\_2-Lx6 > .U_ned:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div[2]/div[2]/div[2]/div[11]/span/div/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//span/div/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fe79647e-ff90-4763-a340-eb15e093e630",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.v836l:nth-child(9)",
+      "targets": [
+        ["css=.v836l:nth-child(9)", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div[2]/div[2]/div[2]/div[9]", "xpath:idRelative"],
+        ["xpath=//div[9]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "951e8215-f9b1-49eb-92db-fdbe468a4b32",
+      "comment": "",
+      "command": "click",
+      "target": "css=.\\_2-Lx6 > .U_ned:nth-child(2)",
+      "targets": [
+        ["css=.\\_2-Lx6 > .U_ned:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div[2]/div[2]/div[2]/div[9]/span/div/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//span/div/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e8e01d94-9a33-4830-b4ef-298c72ace347",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.v836l:nth-child(11)",
+      "targets": [
+        ["css=.v836l:nth-child(11)", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div[2]/div[2]/div[2]/div[11]", "xpath:idRelative"],
+        ["xpath=//div[11]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "84dbd55f-1a4d-4364-8773-9ca6759e55d7",
+      "comment": "",
+      "command": "click",
+      "target": "css=.\\_2-Lx6 > .U_ned:nth-child(2)",
+      "targets": [
+        ["css=.\\_2-Lx6 > .U_ned:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div[2]/div[2]/div[2]/div[11]/span/div/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//span/div/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3fee0bcb-fef2-4cd3-bd00-393a2bb77dc7",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.v836l:nth-child(9)",
+      "targets": [
+        ["css=.v836l:nth-child(9)", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div[2]/div[2]/div[2]/div[9]", "xpath:idRelative"],
+        ["xpath=//div[9]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b8b1929b-f517-4704-b2e1-31f83817969b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.\\_2-Lx6 > .U_ned:nth-child(2)",
+      "targets": [
+        ["css=.\\_2-Lx6 > .U_ned:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div[2]/div[2]/div[2]/div[9]/span/div/div/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//span/div/div/div/div/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "f2d5f2a1-b8ac-43fe-bad5-42e8a25ef5e0",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["78790558-a9af-41c6-a995-d6802d099e7b"]
+  }],
+  "urls": ["https://www.duolingo.com/"],
+  "plugins": []
+}
