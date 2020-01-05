@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.common.exceptions import NoSuchElementException
 
 import credentials
 
@@ -21,7 +22,8 @@ class Duolingo:
         else:
             exit(-1)
 
-        input('goto duolingo')
+    def goto_duolingo(self):
+        print('goto duolingo')
         self.driver.get("https://duolingo.com")
         time.sleep(2)
         self.driver.set_window_size(1280, 773)
@@ -60,7 +62,6 @@ class Duolingo:
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
         time.sleep(6)
-        input("Have you logged in successfully?")
 
 
     def __from_11_to_2(self):
@@ -103,12 +104,30 @@ class Duolingo:
         # input("next? - start the first story")
         self.driver.find_element(By.CSS_SELECTOR, ".set:nth-child(2) > .story:nth-child(3) .story-cover-illustration-image").click()
 
-    def click_continue(self,t=0.5):
-        time.sleep(t)
+    def click_continue(self,t=1):
         print('continue')
-        self.driver.find_element_by_class_name("continue").click()        
+        time.sleep(t)
+        button = self.driver.find_element_by_class_name("continue")
+        while not button.is_enabled():
+            time.sleep(1)
+            print('.')
+
+        button.click() 
+        print('continue.clicked')
 
     def pick_li_answer(self, answer):
+        print('Looking for... ' + answer)
+        time.sleep(2)
+
+        while True:
+            try:
+                e = self.driver.find_element_by_class_name("challenge-answers li:nth-of-type(1)")
+                print('Element found.')
+                break
+            except NoSuchElementException as e:
+                print('Element not found. Repeat in 1 sec.')
+                time.sleep(1)
+
         i=1
         while(1):
             e = self.driver.find_element_by_class_name("challenge-answers li:nth-of-type("+str(i)+")")
@@ -122,6 +141,8 @@ class Duolingo:
             time.sleep(1)      
 
     def pick_6th_phrase(self):
+        print('Looking for... \'fatiguee\'')
+        time.sleep(2)
         e = self.driver.find_element(By.CSS_SELECTOR, ".phrase:nth-child(6) .point-to-phrase-synced-text")
         if e.text != 'fatiguée':
             print('ERROR: fatiguee not found')
@@ -134,7 +155,7 @@ class Duolingo:
         tokens_matched = []
         for i in range(1,11):
             input("next? i = "+str(i))        
-            e = driver.find_element_by_class_name("tokens li:nth-of-type("+str(i)+")")
+            e = self.driver.find_element_by_class_name("tokens li:nth-of-type("+str(i)+")")
             current_token = e.text
             if current_token in tokens:
                 tokens.append(e.text+'_DUPLICATE')
@@ -155,7 +176,7 @@ class Duolingo:
             t_match = d[t]
             print(t + " --> " + t_match)
             
-            e_token = driver.find_element_by_class_name("tokens li:nth-of-type("+str(j+1)+")")
+            e_token = self.driver.find_element_by_class_name("tokens li:nth-of-type("+str(j+1)+")")
             print(e_token.text)
             e_token.click()
 
@@ -164,7 +185,7 @@ class Duolingo:
                 print('Modified t_match : ' + t_match)
 
             j_match = tokens.index(t_match)
-            e_token_matched = driver.find_element_by_class_name("tokens li:nth-of-type("+str(j_match+1)+")")
+            e_token_matched = self.driver.find_element_by_class_name("tokens li:nth-of-type("+str(j_match+1)+")")
             print(e_token_matched.text)
             e_token_matched.click()
 
