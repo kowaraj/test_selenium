@@ -11,207 +11,276 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 import credentials
 
-def pick_my_darling(driver):
-    i=0
-    while(1):
-        e = driver.find_element_by_class_name("challenge-answers li:nth-of-type("+str(i)+")")
-        if e.text == 'My darling.':
-            e.click()
-            break
-        i = i+1
-        if i > 3:
-            exit(0)
-        input("next?")
+class Duolingo:
+
+    def __init__(self, b):
+        if b == 'Chrome':
+            self.driver = webdriver.Chrome()
+        elif b == 'Firefox':
+            self.driver = webdriver.Firefox()
+        else:
+            exit(-1)
+
+        input('next?')
+        input('goto duolingo')
+        self.driver.get("https://duolingo.com")
+        input('setup window size')
+        self.driver.set_window_size(1280, 773)
+
+    def get_driver(self):
+        return self.driver
+
+    def click_alread_have_an_account(self):
+        input("next? - push 'have-account'")
+        element = self.driver.find_element(By.CSS_SELECTOR, ".\\_2hNaj")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        # Click "Already have an account"
+        self.driver.find_element(By.CSS_SELECTOR, "*[data-test=\"have-account\"]").click()
+
+    def provide_credentials(self):
+        # Provide the credentials
+        input("next? - credentials")
+        l = credentials.get_login()
+        print("l = " + str(l))
+        self.driver.find_element(By.CSS_SELECTOR, "*[data-test=\"email-input\"]").send_keys(l)
+
+        input("next? - credentials")
+        p = credentials.get_password()
+        print("p = " + str(p))
+        self.driver.find_element(By.CSS_SELECTOR, "*[data-test=\"password-input\"]").send_keys(p)
+        input("next? - credentials")
+
+    def click_login(self):
+        # Click "Login"
+        input("next? - login")
+        self.driver.find_element(By.CSS_SELECTOR, "*[data-test=\"register-button\"]").click()
+        element = self.driver.find_element(By.CSS_SELECTOR, ".\\_3ryeM")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+
+    def __from_11_to_2(self):
+        element = self.driver.find_element(By.CSS_SELECTOR, ".v836l:nth-child(11)")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        self.driver.find_element(By.CSS_SELECTOR, ".\\_2-Lx6 > .U_ned:nth-child(2)").click()
+
+    def __from_9_to_2(self):
+        element = self.driver.find_element(By.CSS_SELECTOR, ".v836l:nth-child(9)")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        self.driver.find_element(By.CSS_SELECTOR, ".\\_2-Lx6 > .U_ned:nth-child(2)").click()
         
-def run():
-    driver = webdriver.Chrome()
-    input("next?")
+    def switch_to_french(self):
+        # Title: "Duolingo - The world's best way to learn......"
+        if 'French' in self.driver.title:
+            pass
+        elif 'Chinese' in self.driver.title:
+            self.__from_9_to_2()
+        else: 
+            input("error!")
 
-    driver.get("https://www.duolingo.com/course/ja/en/Learn-Japanese")
-    driver.set_window_size(1280, 773)
-    input("next?")
+    def switch_to_stories(self):
+        # Switch to the "Stories"
+        input("next? - to stories")
+        element = self.driver.find_element(By.CSS_SELECTOR, ".v836l:nth-child(3) .\\_1KHTi")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).release().perform()
+        self.driver.find_element(By.CSS_SELECTOR, ".v836l:nth-child(3) .\\_1KHTi").click()
 
-    # 3 | mouseOver | css=.\_2hNaj |  | 
-    element = driver.find_element(By.CSS_SELECTOR, ".\\_2hNaj")
-    actions = ActionChains(driver)
-    actions.move_to_element(element).perform()
-    input("next?")
+    def start_the_story(self):        
+        # Scroll to y=1 line
+        input("next? - scroll to the beginning of the page")
+        self.driver.execute_script("window.scrollTo(0,1)")
 
-    # Click "Already have an account"
-    input("next? - push 'have-account'")
-    driver.find_element(By.CSS_SELECTOR, "*[data-test=\"have-account\"]").click()
+        # Start the first story
+        input("next? - start the first story")
+        self.driver.find_element(By.CSS_SELECTOR, ".set:nth-child(2) > .story:nth-child(3) .story-cover-illustration-image").click()
 
-    # Provide the credentials
-    input("next? - credentials")
-    l = credentials.get_login()
-    print("l = " + str(l))
-    driver.find_element(By.CSS_SELECTOR, "*[data-test=\"email-input\"]").send_keys(l)
+    def click_continue(self,t=0.5):
+        time.sleep(t)
+        print('continue')
+        self.driver.find_element_by_class_name("continue").click()        
 
-    input("next? - credentials")
-    p = credentials.get_password()
-    print("p = " + str(p))
-    driver.find_element(By.CSS_SELECTOR, "*[data-test=\"password-input\"]").send_keys(p)
-    input("next? - credentials")
+    def pick_my_darling(self):
+        i=1
+        while(1):
+            e = self.driver.find_element_by_class_name("challenge-answers li:nth-of-type("+str(i)+")")
+            if e.text == 'My darling.':
+                e.click()
+                break
+            i = i+1
+            if i > 3:
+                print('ERROR: i>3 in pick_my_darling')
+            input("next?")
 
+    def pick_examen_d_anglais(self):
+        i=1
+        while(1):
+            # element = self.driver.find_element(By.CSS_SELECTOR, ".challenge-answer:nth-child(1) > .selectable-token")
+            # actions = ActionChains(self.driver)
+            # actions.move_to_element(element).release().perform()
+            e = self.driver.find_element(By.CSS_SELECTOR, ".challenge-answer:nth-child("+str(i)+") > .selectable-token").click()
+            if e.text == 'examen d\'anglais':
+                e.click()
+                break
+            i=i+1
+            if i>3:
+                print('ERROR: i>3 in pick_examen_d....')
+            input("next?")
 
-    # Click "Login"
-    input("next? - login")
-    driver.find_element(By.CSS_SELECTOR, "*[data-test=\"register-button\"]").click()
-    input("next? - 1")
-    element = driver.find_element(By.CSS_SELECTOR, ".\\_3ryeM")
-    input("next? - 1")
-    actions = ActionChains(driver)
-    input("next? - 1")
-    actions.move_to_element(element).perform()
-    input("next? - 1")
+    def pick_fatigue(self):
+        i=1
+        while(1):
+            e = self.driver.find_element(By.CSS_SELECTOR, ".line-text-content:nth-child("+str(i)+") > .tappable-phrase").click()
+            if e.text == 'examen d\'anglais':
+                e.click()
+                break
+            i=i+1
+            if i>3:
+                print('ERROR: i>3 in pick_examen_d....')
+            input("next?")
+            
 
-    input("next? - ...")
-    element = driver.find_element(By.CSS_SELECTOR, ".Xpzj7:nth-child(1) .\\_2GJb6:nth-child(1)")
-    input("next? - 1")
-    actions = ActionChains(driver)
-    input("next? - 1")
-    actions.move_to_element(element).perform()
+    def pick_she_put_sugar_(self):
+        i=1
+        while(1):
+            e = self.driver.find_element_by_class_name("challenge-answers li:nth-of-type("+str(i)+")")
+            if e.text == 'What?':
+                e.click()
+                break
+            i = i+1
+            if i > 3:
+                print('ERROR: i>3 in pick_what?')
+            input("next?")
 
-    input("next? - ...")
-    # 9 | mouseOut | css=.Xpzj7:nth-child(1) .\_2GJb6:nth-child(1) |  | 
-    element = driver.find_element(By.CSS_SELECTOR, "body")
-    actions = ActionChains(driver)
+    def pick_li_answer(self, answer):
+        i=1
+        while(1):
+            e = self.driver.find_element_by_class_name("challenge-answers li:nth-of-type("+str(i)+")")
+            if e.text == answer:
+                e.click()
+                break
+            i = i+1
+            if i > 3:
+                print('ERROR: i>3 in pick_'+answer)
+            #input("next?")  
+            time.sleep(1)      
 
-
-    # Switch to French/Chinese (9/11)
-    # input("next? - to french")
-    # element = driver.find_element(By.CSS_SELECTOR, ".v836l:nth-child(11)")
-    # actions = ActionChains(driver)
-    # actions.move_to_element(element).perform()
-    # driver.find_element(By.CSS_SELECTOR, ".\\_2-Lx6 > .U_ned:nth-child(2)").click()
-
-    # element = driver.find_element(By.CSS_SELECTOR, ".v836l:nth-child(9)")
-    # actions = ActionChains(driver)
-    # actions.move_to_element(element).perform()
-    # driver.find_element(By.CSS_SELECTOR, ".\\_2-Lx6 > .U_ned:nth-child(2)").click()
-
-    # Switch to the "Stories"
-    input("next? - to stories")
-    element = driver.find_element(By.CSS_SELECTOR, ".v836l:nth-child(3) .\\_1KHTi")
-    actions = ActionChains(driver)
-    actions.move_to_element(element).release().perform()
-    driver.find_element(By.CSS_SELECTOR, ".v836l:nth-child(3) .\\_1KHTi").click()
-
-    # Scroll to y=1 line
-    input("next? - scroll to the beginning of the page")
-    driver.execute_script("window.scrollTo(0,1)")
-    
-    # Start the first story
-    input("next? - start the first story")
-    driver.find_element(By.CSS_SELECTOR, ".set:nth-child(2) > .story:nth-child(3) .story-cover-illustration-image").click()
-
-    # Click the 'CONTINUE' button
-    input("next? - 1/3")
-    driver.find_element_by_class_name("continue").click()
-    input("next? - 2/3")
-    driver.find_element_by_class_name("continue").click()
-    input("next? - 3/3")
-    driver.find_element_by_class_name("continue").click()
-
-    # Choose a checkbox 
-    input("next? - ")
-    element = driver.find_element(By.CSS_SELECTOR, ".click-to-select:nth-child(1) > button")
-    actions = ActionChains(driver)
-    actions.move_to_element(element).release().perform()
-    driver.find_element(By.CSS_SELECTOR, ".click-to-select:nth-child(1) > button").click()
-
-    # 
-    input("next? - 1/3")
-    driver.find_element_by_class_name("continue").click()
-    input("next? - 2/3")
-    driver.find_element_by_class_name("continue").click()
-    input("next? - 3/3")
-    driver.find_element_by_class_name("continue").click()
-
-    # Choose a selectable-token
-
-    # element = driver.find_element(By.CSS_SELECTOR, ".challenge-answer:nth-child(1) > .selectable-token")
-    # actions = ActionChains(driver)
-    # actions.move_to_element(element).release().perform()
-    # driver.find_element(By.CSS_SELECTOR, ".challenge-answer:nth-child(1) > .selectable-token").click()
-
-    # >>> driver.find_element_by_class_name("challenge-answers li:nth-of-type(2)").text
-    # 'My brother.'
-    # >>> driver.find_element_by_class_name("challenge-answers li:nth-of-type(1)").text
-    # 'My colleague.'
-    # >>> driver.find_element_by_class_name("challenge-answers li:nth-of-type(3)").text
-    # 'My darling.'
+    def pick_6th_phrase(self):
+        e = self.driver.find_element(By.CSS_SELECTOR, ".phrase:nth-child(6) .point-to-phrase-synced-text")
+        if e.text != 'fatiguée':
+            print('ERROR: fatiguee not found')
+        else:
+            e.click()
 
 
-    input("next?")
+    def match_tokens(self):
+        tokens = []
+        tokens_matched = []
+        for i in range(1,11):
+            input("next? i = "+str(i))        
+            e = driver.find_element_by_class_name("tokens li:nth-of-type("+str(i)+")")
+            current_token = e.text
+            if current_token in tokens:
+                tokens.append(e.text+'_DUPLICATE')
+            else:
+                tokens.append(e.text)
+        print(str(tokens))
 
-    pick_my_darling(driver)
+        import story1
+        d = story1.expand_dict(story1.dict)
+        print(d)
+        for j in range(len(tokens)):
+            input('next?')
+            t = tokens[j]
+            print("token= " + t)
+            if t in tokens_matched:
+                continue
 
-    input("next?")
+            t_match = d[t]
+            print(t + " --> " + t_match)
+            
+            e_token = driver.find_element_by_class_name("tokens li:nth-of-type("+str(j+1)+")")
+            print(e_token.text)
+            e_token.click()
 
-    # 
-    driver.find_element_by_class_name("continue").click()
-    driver.find_element_by_class_name("continue").click()
-    driver.find_element_by_class_name("continue").click()
+            if t == t_match:
+                t_match = t_match+'_DUPLICATE'
+                print('Modified t_match : ' + t_match)
 
-    # Choose a word
-    element = driver.find_element(By.CSS_SELECTOR, ".phrase:nth-child(6) .point-to-phrase-synced-text")
-    actions = ActionChains(driver)
-    actions.move_to_element(element).release().perform()
-    driver.find_element(By.CSS_SELECTOR, ".phrase:nth-child(6) .point-to-phrase-synced-text").click()
+            j_match = tokens.index(t_match)
+            e_token_matched = driver.find_element_by_class_name("tokens li:nth-of-type("+str(j_match+1)+")")
+            print(e_token_matched.text)
+            e_token_matched.click()
 
-    # 
-    driver.find_element_by_class_name("continue").click()
-    driver.find_element_by_class_name("continue").click()
-    driver.find_element_by_class_name("continue").click()
-    driver.find_element_by_class_name("continue").click()
+            tokens_matched.append(t)
+            tokens_matched.append(t_match)
 
-    # a PAUSE here to listen "Marion mets du sucre dans sa tasse"
 
-    # 
-    driver.find_element_by_class_name("continue").click()
+    def click_continue_skip(self):
+        time.sleep(0.5)
+        print('continue')
+        self.driver.find_element_by_class_name("skip").click()        
 
-    # Choose a checkbox "She put sugar in her coffee"
-    element = driver.find_element(By.CSS_SELECTOR, ".click-to-select:nth-child(3) > button")
-    actions = ActionChains(driver)
-    actions.move_to_element(element).release().perform()
-    driver.find_element(By.CSS_SELECTOR, ".click-to-select:nth-child(3) > button").click()
 
-    # 
-    driver.find_element_by_class_name("continue").click()
-    driver.find_element_by_class_name("continue").click()
-    driver.find_element_by_class_name("continue").click()
-    driver.find_element_by_class_name("continue").click()
 
-    # Choose a checkbox for "quoi = What?"
-    element = driver.find_element(By.CSS_SELECTOR, ".click-to-select:nth-child(1) > button")
-    actions = ActionChains(driver)
-    actions.move_to_element(element).release().perform()
-    driver.find_element(By.CSS_SELECTOR, ".click-to-select:nth-child(1) > button").click()
 
-    # 
-    driver.find_element_by_class_name("continue").click()
-    driver.find_element_by_class_name("continue").click()
-    driver.find_element_by_class_name("continue").click()
 
-    # Choose a checkbox "Marion was so tired that shee... put solt in her coffee"
-    element = driver.find_element(By.CSS_SELECTOR, ".click-to-select:nth-child(3) > button")
-    actions = ActionChains(driver)
-    actions.move_to_element(element).release().perform()
-    driver.find_element(By.CSS_SELECTOR, ".click-to-select:nth-child(3) > button").click()
 
-    # 
-    driver.find_element_by_class_name("continue").click()
 
-    # Match the words.......
-    #
-    #
-    #
+    def the_rest(self):
 
-    # 
-    driver.find_element_by_class_name("continue").click() # Done
-    driver.find_element_by_class_name("continue").click() # You earned 24 XP
-    driver.find_element_by_class_name("continue").click() # Story complete!
-    driver.find_element_by_class_name("continue").click() # Back to "Stories"
+        # Choose a word
+        element = self.driver.find_element(By.CSS_SELECTOR, ".phrase:nth-child(6) .point-to-phrase-synced-text")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).release().perform()
+        self.driver.find_element(By.CSS_SELECTOR, ".phrase:nth-child(6) .point-to-phrase-synced-text").click()
+       # a PAUSE here to listen "Marion mets du sucre dans sa tasse"
 
+        # 
+        self.driver.find_element_by_class_name("continue").click()
+
+        # Choose a checkbox "She put sugar in her coffee"
+        element = self.driver.find_element(By.CSS_SELECTOR, ".click-to-select:nth-child(3) > button")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).release().perform()
+        self.driver.find_element(By.CSS_SELECTOR, ".click-to-select:nth-child(3) > button").click()
+
+        # 
+        self.driver.find_element_by_class_name("continue").click()
+        self.driver.find_element_by_class_name("continue").click()
+        self.driver.find_element_by_class_name("continue").click()
+        self.driver.find_element_by_class_name("continue").click()
+
+        # Choose a checkbox for "quoi = What?"
+        element = self.driver.find_element(By.CSS_SELECTOR, ".click-to-select:nth-child(1) > button")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).release().perform()
+        self.driver.find_element(By.CSS_SELECTOR, ".click-to-select:nth-child(1) > button").click()
+
+        # 
+        self.driver.find_element_by_class_name("continue").click()
+        self.driver.find_element_by_class_name("continue").click()
+        self.driver.find_element_by_class_name("continue").click()
+
+        # Choose a checkbox "Marion was so tired that shee... put solt in her coffee"
+        element = self.driver.find_element(By.CSS_SELECTOR, ".click-to-select:nth-child(3) > button")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).release().perform()
+        self.driver.find_element(By.CSS_SELECTOR, ".click-to-select:nth-child(3) > button").click()
+
+        # 
+        self.driver.find_element_by_class_name("continue").click()
+
+        # Match the words.......
+        #
+        #
+        #
+
+        # 
+        self.driver.find_element_by_class_name("continue").click() # Done
+        self.driver.find_element_by_class_name("continue").click() # You earned 24 XP
+        self.driver.find_element_by_class_name("continue").click() # Story complete!
+        self.driver.find_element_by_class_name("continue").click() # Back to "Stories"
 
