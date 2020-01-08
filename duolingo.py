@@ -9,8 +9,12 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.common.exceptions import NoSuchElementException
-
+import random
 import credentials
+import story1
+import importlib
+import sys, select
+
 
 class Duolingo:
 
@@ -21,6 +25,13 @@ class Duolingo:
             self.driver = webdriver.Firefox()
         else:
             exit(-1)
+
+        # d0 = story1.story_dict
+        # d1 = story1.expand_dict(d0)
+        self.d = story1.StoryDict()
+        # self.d.update(d1)
+        
+
 
     def goto_duolingo(self):
         print('goto duolingo')
@@ -46,6 +57,7 @@ class Duolingo:
         l = credentials.get_login()
         print("l = " + str(l))
         self.driver.find_element(By.CSS_SELECTOR, "*[data-test=\"email-input\"]").send_keys(l)
+        time.sleep(1)
 
         #input("next? - credentials")
         p = credentials.get_password()
@@ -149,12 +161,14 @@ class Duolingo:
         else:
             e.click()
 
+    def dt(self, a=5, b=10): # random delay = 0.5sec + [0.5sec,1sec]
+        return time.sleep(0.5 + random.randint(a,b)/10.)
 
     def match_tokens(self):
         tokens = []
         tokens_matched = []
         for i in range(1,11):
-            input("next? i = "+str(i))        
+            #input("next? i = "+str(i))        
             e = self.driver.find_element_by_class_name("tokens li:nth-of-type("+str(i)+")")
             current_token = e.text
             if current_token in tokens:
@@ -163,22 +177,35 @@ class Duolingo:
                 tokens.append(e.text)
         print(str(tokens))
 
-        import story1
-        d = story1.expand_dict(story1.dict)
-        print(d)
+        print(self.d)
+
         for j in range(len(tokens)):
-            input('next?')
+            #input('next?')
             t = tokens[j]
             print("token= " + t)
             if t in tokens_matched:
                 continue
 
-            t_match = d[t]
+            t_match = self.d[t]
             print(t + " --> " + t_match)
+
+            # handle the 'women,wife --> femme' case
+            if ',' in t_match:
+                t_match_list = t_match.split(',')
+                for ti in t_match_list:
+                    print('ti = ' + ti)
+                    print('tokens = ' + str(tokens))
+                    print('tokens_matched = ' + str(tokens_matched))
+                    if ti in tokens and ti not in tokens_matched:
+                        print('choosing t_match to be = ' + str(ti))
+                        t_match = ti
+                        break
+
             
             e_token = self.driver.find_element_by_class_name("tokens li:nth-of-type("+str(j+1)+")")
             print(e_token.text)
             e_token.click()
+            self.dt()
 
             if t == t_match:
                 t_match = t_match+'_DUPLICATE'
@@ -188,15 +215,43 @@ class Duolingo:
             e_token_matched = self.driver.find_element_by_class_name("tokens li:nth-of-type("+str(j_match+1)+")")
             print(e_token_matched.text)
             e_token_matched.click()
+            self.dt()
 
             tokens_matched.append(t)
             tokens_matched.append(t_match)
 
 
     def click_continue_skip(self):
-        time.sleep(0.5)
-        print('continue')
-        self.driver.find_element_by_class_name("skip").click()        
+        print('skip...')
+        time.sleep(3)
+
+        try:
+            button = self.driver.find_element_by_class_name("skip")
+            button.click() 
+            print('skip.clicked')
+
+        except NoSuchElementException as e:
+            print('No \'skip\' button. We are done.')
+
+    def stop(self):
+        print('\nYou have 2 seconds to cancel...')
+        i, o, e = select.select( [sys.stdin], [], [], 2 )
+        if (i):
+            # print("You said " + sys.stdin.readline().strip())
+            return True
+        else:
+            #print("You said nothing!")
+            return False
+
+
+
+
+
+
+
+
+
+
 
 
 

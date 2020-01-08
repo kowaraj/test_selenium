@@ -8,6 +8,7 @@ a4 = 'What?'
 a5 = '… put salt in her coffee instead of sugar.'
 
 def init():
+#    return duolingo.Duolingo('Chrome')
     return duolingo.Duolingo('Firefox')
 
 def login(d):
@@ -15,10 +16,11 @@ def login(d):
     d.click_alread_have_an_account()
     d.provide_credentials()
     d.click_login()
+    input("Have you logged in successfully?")
+    d.switch_to_stories()
 
 
 def run1(d):
-    d.switch_to_stories()
     d.start_the_story() 
 
     d.click_continue() # bonjour
@@ -72,18 +74,26 @@ def run7(d):
     d.click_continue( ) # . 
 
     d.match_tokens()
-    input('all matched? ')
+    #input('all matched? ')
+
     d.click_continue( ) # 24XP
     d.click_continue( ) # story complete
+    d.click_continue( ) # 
     d.click_continue_skip( ) # . 
 
 
 def run(d):
-    input("Have you logged in successfully?")
-    run1(d)
-    run2(d)
-    run3(d)
-    run4(d)
-    run5(d)
-    run6(d)
-    run7(d)
+
+    while True:
+        run1(d)
+        run2(d)
+        run3(d)
+        run4(d)
+        run5(d)
+        run6(d)
+        run7(d)
+
+        #input('Run once again?... ')
+        if d.stop():
+            break
+        print('Run again...')
