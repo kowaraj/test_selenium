@@ -1,6 +1,7 @@
 story_dict = {
     'a'       : 'une',
     'a lot'   : 'beaucoup',
+    'an'      : 'un',
     'am'      : 'suis',
     'are'     : 'es',
     'at'      : 'à',
